@@ -1,1 +1,4 @@
 vendor/
+docs/
+.phpdoc/
+

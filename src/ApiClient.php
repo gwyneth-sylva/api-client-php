@@ -352,6 +352,11 @@ enum ListingState: string {
     case CLOSED = 'CLOSED';
 }
 
+/**
+ * ListingDto defines the shape of the listing data used by the CloudForest API.
+ *
+ * @package CloudForest
+ */
 class ListingDto {
     /**
      * The primary key of the listing as a UUID. Use an empty string to create
