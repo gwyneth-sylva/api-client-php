@@ -8,7 +8,7 @@ PHP client for the CloudForest Marketplace API.
 composer require cloudforest/api-client-php
 ```
 
-## Update
+## Update
 
 Fetch recent changes with:
 
