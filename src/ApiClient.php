@@ -18,33 +18,47 @@ use GuzzleHttp\Exception\GuzzleException;
  */
 class ApiClient
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $id = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $secret = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $host = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $api = '';
 
-    /** @var Token */
+    /**
+     * @var Token 
+     */
     public $token;
 
-    /** @var Listing */
+    /**
+     * @var Listing 
+     */
     public $listing;
 
-    /** @var Jwt */
+    /**
+     * @var Jwt 
+     */
     public $jwt;
 
     /**
-     * @see Create the API client and its modules.
-     * @param string $id The API key issued by CloudForest.
-     * @param string $secret The API secret issued by CloudForest.
-     * @param string $host The address of the CloudForest web host.
-     * @param string $api The address of the CloudForest API server.
+     * @see    Create the API client and its modules.
+     * @param  string $id     The API key issued by CloudForest.
+     * @param  string $secret The API secret issued by CloudForest.
+     * @param  string $host   The address of the CloudForest web host.
+     * @param  string $api    The address of the CloudForest API server.
      * @return void
      */
     public function __construct(string $id, string $secret, string $host, string $api)
@@ -89,7 +103,8 @@ class ApiClient
 
     /**
      * Setter for the access token.
-     * @param string $access The access token.
+     *
+     * @param  string $access The access token.
      * @return void
      */
     public function setAccess(string $access)
@@ -105,32 +120,46 @@ class ApiClient
  */
 class ApiModuleBase
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $id = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $secret = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $host = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $api = '';
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     private $access = '';
 
-    /** @var Client */
+    /**
+     * @var Client 
+     */
     protected $client;
 
-    /** @var mixed[] */
+    /**
+     * @var mixed[] 
+     */
     protected $headers;
 
     /**
-     * @param string $id The API key issued by CloudForest.
-     * @param string $secret The API secret issued by CloudForest.
-     * @param string $host The address of the CloudForest web host
-     * @param string $api The address of the CloudForest API server.
+     * @param  string $id     The API key issued by CloudForest.
+     * @param  string $secret The API secret issued by CloudForest.
+     * @param  string $host   The address of the CloudForest web host
+     * @param  string $api    The address of the CloudForest API server.
      * @return void
      */
     public function __construct(string $id, string $secret, string $host, string $api)
@@ -142,9 +171,11 @@ class ApiModuleBase
 
         $this->headers = ['x-api-key' => $this->id];
 
-        $this->client = new Client([
+        $this->client = new Client(
+            [
             'base_uri' => $api
-        ]);
+            ]
+        );
     }
 
     /**
@@ -161,9 +192,11 @@ class ApiModuleBase
      * Get the headers for a request. This includes x-api-key to authorise this
      * client against the API and if set a Bearer token to supply the user's
      * credentials.
+     *
      * @return array 
      */
-    public function getHeadersWithAccessBearer() {
+    public function getHeadersWithAccessBearer()
+    {
         $h = $this->headers;
         if (strlen($this->access) > 0) {
             $h['Authorization'] = 'Bearer ' . $this->access;
@@ -180,11 +213,11 @@ class ApiModuleBase
 class Token extends ApiModuleBase
 {
     /**
-     * @see ApiBase for documentation.
-     * @param string $id
-     * @param string $secret
-     * @param string $host
-     * @param string $api
+     * @see    ApiBase for documentation.
+     * @param  string $id
+     * @param  string $secret
+     * @param  string $host
+     * @param  string $api
      * @return void
      */
     public function __construct(string $id, string $secret, string $host, string $api)
@@ -194,20 +227,23 @@ class Token extends ApiModuleBase
 
     /**
      * Exchange a temp token received from CloudForest for a JWT.
-     * @param mixed $tempToken
+     *
+     * @param  mixed $tempToken
      * @return array An array containing the key 'access' with the access token
      */
     public function exchange($tempToken)
     {
         try {
-            $response = $this->client->request('PATCH', '/api/tokens/oauth/' . $tempToken, [
+            $response = $this->client->request(
+                'PATCH', '/api/tokens/oauth/' . $tempToken, [
                 'json' =>
                 [
                     'clientId' => $this->id,
                     'clientSecret' => $this->secret
                 ],
                 'headers' => $this->getHeadersWithAccessBearer()
-            ]);
+                ]
+            );
         }
         catch (GuzzleException $e) {
             throw $e;
@@ -240,16 +276,18 @@ class Listing extends ApiModuleBase
      * @todo Expose more properties such as description, latitidue and
      * longitude. This can be done in July 2024.
      *
-     * @param ListingDto $listing The new listing
+     * @param  ListingDto $listing The new listing
      * @return mixed The new listing as an associative array
      * @throws RequestException
      */
     public function create(ListingDto $listing)
     {
         try {
-            $response = $this->client->request('GET', '/api/current-user', [
+            $response = $this->client->request(
+                'GET', '/api/current-user', [
                 'headers' => $this->getHeadersWithAccessBearer()
-            ]);
+                ]
+            );
         }
         catch (GuzzleException $e) {
             throw $e;
@@ -265,11 +303,13 @@ class Listing extends ApiModuleBase
         try {
             $listing->userId = $userId;
             $listing->companyId = $companyId;
-            $response = $this->client->request('POST', '/api/listings/', [
+            $response = $this->client->request(
+                'POST', '/api/listings/', [
                 // Convert to assoc array
                 'json' => json_decode(json_encode($listing), true),
                 'headers' => $this->getHeadersWithAccessBearer()
-            ]);
+                ]
+            );
         }
         catch (GuzzleException $e) {
             throw $e;
@@ -289,11 +329,11 @@ class Listing extends ApiModuleBase
 class Jwt extends ApiModuleBase
 {
     /**
-     * @see ApiBase for documentation.
-     * @param string $id
-     * @param string $secret
-     * @param string $host
-     * @param string $api
+     * @see    ApiBase for documentation.
+     * @param  string $id
+     * @param  string $secret
+     * @param  string $host
+     * @param  string $api
      * @return void
      */
     public function __construct(string $id, string $secret, string $host, string $api)
@@ -303,7 +343,8 @@ class Jwt extends ApiModuleBase
 
     /**
      * Validate a refresh token.
-     * @param string $refresh The refresh token to validate
+     *
+     * @param  string $refresh The refresh token to validate
      * @return void 
      * @throws GuzzleException 401 if not valid
      */
@@ -312,9 +353,11 @@ class Jwt extends ApiModuleBase
         $h = $this->headers;
         $h['Authorization'] = 'Bearer ' . $refresh;
         try {
-            $this->client->request('GET', '/api/jwts/refresh/validate', [
+            $this->client->request(
+                'GET', '/api/jwts/refresh/validate', [
                 'headers' => $h
-            ]);
+                ]
+            );
         }
         catch (GuzzleException $e) {
             throw $e;
@@ -323,7 +366,8 @@ class Jwt extends ApiModuleBase
 
     /**
      * Use a refresh token to get an access token.
-     * @param string $refresh The refresh token
+     *
+     * @param  string $refresh The refresh token
      * @return mixed The JWT containing the access token
      * @throws GuzzleException 
      */
@@ -332,9 +376,11 @@ class Jwt extends ApiModuleBase
         $h = $this->headers;
         $h['Authorization'] = 'Bearer ' . $refresh;
         try {
-            $response = $this->client->request('POST', '/api/jwts/refresh', [
+            $response = $this->client->request(
+                'POST', '/api/jwts/refresh', [
                 'headers' => $h
-            ]);
+                ]
+            );
         }
         catch (GuzzleException $e) {
             throw $e;
@@ -346,7 +392,8 @@ class Jwt extends ApiModuleBase
     }
 }
 
-enum ListingState: string {
+enum ListingState: string
+{
     case DRAFT = 'DRAFT';
     case OPEN = 'OPEN';
     case CLOSED = 'CLOSED';
@@ -357,10 +404,12 @@ enum ListingState: string {
  *
  * @package CloudForest
  */
-class ListingDto {
+class ListingDto
+{
     /**
      * The primary key of the listing as a UUID. Use an empty string to create
      * a new one.
+     *
      * @var string
      **/
     public $id = '';
@@ -372,18 +421,21 @@ class ListingDto {
      * CLOSED = Only visible to owner, still usable in transactions.
      * Currently DRAFT listings are not fully supported so only create listings
      * in an OPEN state.
+     *
      * @var value-of<ListingState>
      */
     public $state = ListingState::OPEN;
 
     /**
      * The title of the listing.
+     *
      * @var string
      */
     public $title = '';
 
     /**
      * A description of the listing.
+     *
      * @var string
      */
     public $description = 'A testing listing created from the CloudForest PHP ApiClient';
@@ -391,6 +443,7 @@ class ListingDto {
     /**
      * The units in which the listing is available as a freeform string. EG
      * "tonnes", "m^3".
+     *
      * @var string
      */
     public $units = 'tonnes';
@@ -398,6 +451,7 @@ class ListingDto {
     /**
      * The amount of stock of the units as an integer. EG if units is m^3 and
      * there are 10 m^3 for sale then the stock is 10.
+     *
      * @var int
      */
     public $stock = 1;
@@ -407,12 +461,14 @@ class ListingDto {
      * does not necessarily have to be exact, eg you could protect a valuable
      * resource by supplying the office handling the sale. It is passed
      * as a float representing decimal degrees, eg 53.12
+     *
      * @var float
      */
     public $latitude = 53.12;
 
     /**
      * The longitude of a point representing the location of the listing.
+     *
      * @see $latitude
      * @var float
      */
@@ -420,6 +476,7 @@ class ListingDto {
 
     /**
      * Does this listing require a felling licence?
+     *
      * @var bool
      */
     public $licenceRequired = false;
@@ -428,6 +485,7 @@ class ListingDto {
      * If a licence is required or if a licence exists then the number can be
      * supplied here as a string, on the assumption the 'number' will contain
      * characters.
+     *
      * @var string
      */
     public $licenceNumber = '';
@@ -439,8 +497,9 @@ class ListingDto {
      * this is not available through the ApiClient. For now, use 18 for
      * 'Standing Timber' or ask CloudForest for alternative IDs if you need a
      * different category.
+     *
      * @todo Expose categories through Api to ApiClient for reuse
-     * @var array<int>
+     * @var  array<int>
      */
     public $categories = [18];
 
@@ -452,8 +511,9 @@ class ListingDto {
      * 1. Create a facet (eg species=oak)
      * 2. Get back a facet DTO with a UUID
      * 3. Add the UUID to this list
+     *
      * @todo Implement facet support in the ApiClient
-     * @var array<string>
+     * @var  array<string>
      */
     public $facets = [];
 
@@ -465,14 +525,16 @@ class ListingDto {
      * 1. Upload an image
      * 2. Get back a image DTO with a UUID
      * 3. Add the UUID to this list
+     *
      * @todo Implement image support in the ApiClient
-     * @var array<string>
+     * @var  array<string>
      */
     public $images = [];
 
     /**
      * The id of the user who owns the listing as a UUID. This will be set by
      * the ApiClient from the JWT access token.
+     *
      * @var string
      */
     public $userId = '';
@@ -480,11 +542,13 @@ class ListingDto {
     /**
      * The id of the company of the user who owns the listing as a UUID. This
      * will be set by the ApiClient from the JWT access token.
+     *
      * @var string
      */
     public $companyId = '';
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->title = 'Test Listing ' . date("Y-m-d H:i:s"); 
     }
 }
