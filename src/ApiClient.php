@@ -93,7 +93,6 @@ class ApiClient
     /**
      * Get the marketplace URL. This is just the host passed in when creating
      * the API client, but it provides syntactic sugar for the consumer.
-     *
      * @return string The URL.
      */
     public function getMarketplaceURL()
@@ -173,7 +172,7 @@ class ApiModuleBase
 
         $this->client = new Client(
             [
-            'base_uri' => $api
+                'base_uri' => $api,
             ]
         );
     }
@@ -238,12 +237,12 @@ class Token extends ApiModuleBase
                 'PATCH',
                 '/api/tokens/oauth/' . $tempToken,
                 [
-                'json' =>
-                [
-                    'clientId' => $this->id,
-                    'clientSecret' => $this->secret
-                ],
-                'headers' => $this->getHeadersWithAccessBearer()
+                    'json' =>
+                    [
+                        'clientId' => $this->id,
+                        'clientSecret' => $this->secret,
+                    ],
+                    'headers' => $this->getHeadersWithAccessBearer(),
                 ]
             );
         } catch (GuzzleException $e) {
@@ -288,7 +287,7 @@ class Listing extends ApiModuleBase
                 'GET',
                 '/api/current-user',
                 [
-                'headers' => $this->getHeadersWithAccessBearer()
+                    'headers' => $this->getHeadersWithAccessBearer(),
                 ]
             );
         } catch (GuzzleException $e) {
@@ -309,9 +308,9 @@ class Listing extends ApiModuleBase
                 'POST',
                 '/api/listings/',
                 [
-                // Convert to assoc array
-                'json' => json_decode(json_encode($listing), true),
-                'headers' => $this->getHeadersWithAccessBearer()
+                    // Convert to assoc array
+                    'json' => json_decode(json_encode($listing), true),
+                    'headers' => $this->getHeadersWithAccessBearer(),
                 ]
             );
         } catch (GuzzleException $e) {
@@ -360,7 +359,7 @@ class Jwt extends ApiModuleBase
                 'GET',
                 '/api/jwts/refresh/validate',
                 [
-                'headers' => $h
+                    'headers' => $h,
                 ]
             );
         } catch (GuzzleException $e) {
@@ -384,7 +383,7 @@ class Jwt extends ApiModuleBase
                 'POST',
                 '/api/jwts/refresh',
                 [
-                'headers' => $h
+                    'headers' => $h,
                 ]
             );
         } catch (GuzzleException $e) {
