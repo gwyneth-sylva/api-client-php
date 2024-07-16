@@ -1,0 +1,10 @@
+{
+    "name": "cloudforest/api-client-php",
+    "description": "PHP client for the CloudForest Marketplace API",
+    "type": "library",
+    "license": "Apache-2.0",
+    "require": {
+        "php": "^8.1",
+        "guzzlehttp/guzzle": "^7.8"
+    }
+}
