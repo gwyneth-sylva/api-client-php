@@ -8,7 +8,7 @@
         "guzzlehttp/guzzle": "^7.8"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "^3.0"
+        "friendsofphp/php-cs-fixer": "^3.59"
     },
     "autoload": {
         "psr-4": {
@@ -16,7 +16,7 @@
         }
     },
     "scripts": {
-        "phpcs": "./vendor/bin/phpcs src",
-        "phpcbf": "./vendor/bin/phpcbf src"
+        "phpcs:check": "./vendor/bin/php-cs-fixer check ./src",
+        "phpcs:fix": "./vendor/bin/php-cs-fixer fix src"
     }
 }

@@ -19,37 +19,37 @@ use GuzzleHttp\Exception\GuzzleException;
 class ApiClient
 {
     /**
-     * @var string 
+     * @var string
      */
     protected $id = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $secret = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $host = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $api = '';
 
     /**
-     * @var Token 
+     * @var Token
      */
     public $token;
 
     /**
-     * @var Listing 
+     * @var Listing
      */
     public $listing;
 
     /**
-     * @var Jwt 
+     * @var Jwt
      */
     public $jwt;
 
@@ -121,37 +121,37 @@ class ApiClient
 class ApiModuleBase
 {
     /**
-     * @var string 
+     * @var string
      */
     protected $id = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $secret = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $host = '';
 
     /**
-     * @var string 
+     * @var string
      */
     protected $api = '';
 
     /**
-     * @var string 
+     * @var string
      */
     private $access = '';
 
     /**
-     * @var Client 
+     * @var Client
      */
     protected $client;
 
     /**
-     * @var mixed[] 
+     * @var mixed[]
      */
     protected $headers;
 
@@ -193,7 +193,7 @@ class ApiModuleBase
      * client against the API and if set a Bearer token to supply the user's
      * credentials.
      *
-     * @return array 
+     * @return array
      */
     public function getHeadersWithAccessBearer()
     {
@@ -235,7 +235,9 @@ class Token extends ApiModuleBase
     {
         try {
             $response = $this->client->request(
-                'PATCH', '/api/tokens/oauth/' . $tempToken, [
+                'PATCH',
+                '/api/tokens/oauth/' . $tempToken,
+                [
                 'json' =>
                 [
                     'clientId' => $this->id,
@@ -244,8 +246,7 @@ class Token extends ApiModuleBase
                 'headers' => $this->getHeadersWithAccessBearer()
                 ]
             );
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw $e;
         }
 
@@ -284,12 +285,13 @@ class Listing extends ApiModuleBase
     {
         try {
             $response = $this->client->request(
-                'GET', '/api/current-user', [
+                'GET',
+                '/api/current-user',
+                [
                 'headers' => $this->getHeadersWithAccessBearer()
                 ]
             );
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw $e;
         }
 
@@ -304,14 +306,15 @@ class Listing extends ApiModuleBase
             $listing->userId = $userId;
             $listing->companyId = $companyId;
             $response = $this->client->request(
-                'POST', '/api/listings/', [
+                'POST',
+                '/api/listings/',
+                [
                 // Convert to assoc array
                 'json' => json_decode(json_encode($listing), true),
                 'headers' => $this->getHeadersWithAccessBearer()
                 ]
             );
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw $e;
         }
 
@@ -345,7 +348,7 @@ class Jwt extends ApiModuleBase
      * Validate a refresh token.
      *
      * @param  string $refresh The refresh token to validate
-     * @return void 
+     * @return void
      * @throws GuzzleException 401 if not valid
      */
     public function validateRefresh(string $refresh)
@@ -354,12 +357,13 @@ class Jwt extends ApiModuleBase
         $h['Authorization'] = 'Bearer ' . $refresh;
         try {
             $this->client->request(
-                'GET', '/api/jwts/refresh/validate', [
+                'GET',
+                '/api/jwts/refresh/validate',
+                [
                 'headers' => $h
                 ]
             );
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw $e;
         }
     }
@@ -369,7 +373,7 @@ class Jwt extends ApiModuleBase
      *
      * @param  string $refresh The refresh token
      * @return mixed The JWT containing the access token
-     * @throws GuzzleException 
+     * @throws GuzzleException
      */
     public function refresh(string $refresh)
     {
@@ -377,12 +381,13 @@ class Jwt extends ApiModuleBase
         $h['Authorization'] = 'Bearer ' . $refresh;
         try {
             $response = $this->client->request(
-                'POST', '/api/jwts/refresh', [
+                'POST',
+                '/api/jwts/refresh',
+                [
                 'headers' => $h
                 ]
             );
-        }
-        catch (GuzzleException $e) {
+        } catch (GuzzleException $e) {
             throw $e;
         }
 
@@ -549,6 +554,6 @@ class ListingDto
 
     public function __construct()
     {
-        $this->title = 'Test Listing ' . date("Y-m-d H:i:s"); 
+        $this->title = 'Test Listing ' . date("Y-m-d H:i:s");
     }
 }
