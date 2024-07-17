@@ -1,9 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace CloudForest;
 
 use Exception;
-use Illuminate\Http\Client\RequestException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -310,7 +309,7 @@ class Token extends ApiModuleBase
             throw $e;
         }
 
-        $body = $response->getBody();
+        $body = $response->getBody()->getContents();
         $content = json_decode($body, true);
         $data = $this->getDataAsArray($content);
         if (array_key_exists('access', $data) && array_key_exists('refresh', $data) && is_string($data['access']) && is_string($data['refresh'])) {
@@ -362,7 +361,7 @@ class Listing extends ApiModuleBase
             throw $e;
         }
 
-        $body = $response->getBody();
+        $body = $response->getBody()->getContents();
         $content = json_decode($body, true);
         $data = $this->getDataAsArray($content);
 
@@ -406,7 +405,7 @@ class Listing extends ApiModuleBase
             throw $e;
         }
 
-        $body = $response->getBody();
+        $body = $response->getBody()->getContents();
         $content = json_decode($body, true);
         $data = $this->getDataAsString($content);
         return $data;
@@ -480,7 +479,7 @@ class Jwt extends ApiModuleBase
             throw $e;
         }
 
-        $body = $response->getBody();
+        $body = $response->getBody()->getContents();
         $content = json_decode($body, true);
         $data = $this->getDataAsArray($content);
         return $data;
