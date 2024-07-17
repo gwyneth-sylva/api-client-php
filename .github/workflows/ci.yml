@@ -21,5 +21,8 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
 
-    - name: php-cs-fixer Check
+    - name: PHP CS Fixer Check
       run: composer run phpcs:check
+
+    - name: PHPStan
+      run: composer run phpstan

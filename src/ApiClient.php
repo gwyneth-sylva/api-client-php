@@ -229,7 +229,7 @@ class ApiModuleBase
      * way for phpstan analysis. Use this when you expect the JSON data to be
      * a string.
      * @param mixed $content string
-     * @return string
+     * @return int
      * @throws Exception
      */
     public function getDataAsString($content)
