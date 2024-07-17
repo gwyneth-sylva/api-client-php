@@ -1,0 +1,25 @@
+name: api-client-php CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  CLOUDFOREST_API: https://cfdev.cloudforest.market
+
+jobs:
+  ci:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout ${{ github.ref }}
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      uses: php-actions/composer@v6
+
+    - name: php-cs-fixer Check
+      run: composer run phpcs:check
