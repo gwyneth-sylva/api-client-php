@@ -7,12 +7,11 @@ use PHPUnit\Framework\TestCase;
 
 final class ApiClientTest extends TestCase
 {
-    public function testMarketplaceUrl(): void
+    public function testGetMarketplaceUrl(): void
     {
-        $client = new ApiClient('', '', getenv('CLOUDFOREST_HOST'), '');
-
+        $host = getenv('CLOUDFOREST_HOST');
+        $client = new ApiClient('', '', $host, '');
         $url = $client->getMarketplaceURL();
-
-        $this->assertSame('this will fail', $url);
+        $this->assertSame($host, $url);
     }
 }
