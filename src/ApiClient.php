@@ -206,12 +206,13 @@ class ApiModuleBase
 
     /**
      * Extract the data property from the mixed return of json_decode in a safe
-     * way for phpstan analysis.
+     * way for phpstan analysis. Use this when you expect the JSON data to be
+     * an array.
      * @param mixed $content
      * @return array<string, JsonType>
      * @throws Exception
      */
-    public function getData($content)
+    public function getDataAsArray($content)
     {
         if (is_array($content) && array_key_exists('data', $content)) {
             $data = $content['data'];
@@ -220,7 +221,27 @@ class ApiModuleBase
             }
         }
 
-        throw new \Exception('ApiModuleBase->getData: decoded JSON does not have a valid data property');
+        throw new \Exception('ApiModuleBase->getDataAsArray: decoded JSON does not have a valid data property');
+    }
+
+    /**
+     * Extract the data property from the mixed return of json_decode in a safe
+     * way for phpstan analysis. Use this when you expect the JSON data to be
+     * a string.
+     * @param mixed $content string
+     * @return string
+     * @throws Exception
+     */
+    public function getDataAsString($content)
+    {
+        if (is_array($content) && array_key_exists('data', $content)) {
+            $data = $content['data'];
+            if (is_string($data)) {
+                return $data;
+            }
+        }
+
+        throw new \Exception('ApiModuleBase->getDataAsString: decoded JSON does not have a valid data property');
     }
 
     /**
@@ -291,7 +312,7 @@ class Token extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        $data = $this->getData($content);
+        $data = $this->getDataAsArray($content);
         if (array_key_exists('access', $data) && array_key_exists('refresh', $data) && is_string($data['access']) && is_string($data['refresh'])) {
             return [
                 'access' => $data['access'],
@@ -323,8 +344,8 @@ class Listing extends ApiModuleBase
      * @todo Expose more properties such as description, latitidue and
      * longitude. This can be done in July 2024.
      *
-     * @param  ListingDto $listing The new listing
-     * @return mixed The new listing as an associative array
+     * @param  ListingDto $listing The new listing to send to CloudForest
+     * @return string The UUID of the resulting listing
      * @throws GuzzleException
      */
     public function create(ListingDto $listing)
@@ -343,7 +364,7 @@ class Listing extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        $data = $this->getData($content);
+        $data = $this->getDataAsArray($content);
 
         if (is_string($data['id'])) {
             $userId = $data['id'];
@@ -385,7 +406,7 @@ class Listing extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        $data = $this->getData($content);
+        $data = $this->getDataAsString($content);
         return $data;
     }
 }
@@ -459,7 +480,7 @@ class Jwt extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        $data = $this->getData($content);
+        $data = $this->getDataAsArray($content);
         return $data;
     }
 }
