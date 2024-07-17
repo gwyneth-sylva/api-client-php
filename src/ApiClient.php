@@ -388,7 +388,9 @@ class Listing extends ApiModuleBase
 
             // Convert to assoc array
             $encoded = json_encode($listing);
-            if (!$encoded) throw new \Exception('Listing->create: Failed to encode ListingDto');
+            if (!$encoded) {
+                throw new \Exception('Listing->create: Failed to encode ListingDto');
+            }
             $assoc = json_decode($encoded, true);
 
             // Post it
