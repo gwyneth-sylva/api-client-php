@@ -2,6 +2,7 @@
 
 namespace CloudForest;
 
+use Exception;
 use Illuminate\Http\Client\RequestException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -192,7 +193,7 @@ class ApiModuleBase
      * client against the API and if set a Bearer token to supply the user's
      * credentials.
      *
-     * @return array
+     * @return array<string>
      */
     public function getHeadersWithAccessBearer()
     {
@@ -201,6 +202,44 @@ class ApiModuleBase
             $h['Authorization'] = 'Bearer ' . $this->access;
         }
         return $h;
+    }
+
+    /**
+     * Extract the data property from the mixed return of json_decode in a safe
+     * way for phpstan analysis.
+     * @param mixed $content
+     * @return array<string, JsonType>
+     * @throws Exception
+     */
+    public function getData($content)
+    {
+        if (is_array($content) && array_key_exists('data', $content)) {
+            $data = $content['data'];
+            if (is_array($data)) {
+                return $data;
+            }
+        }
+
+        throw new \Exception('ApiModuleBase->getData: decoded JSON does not have a valid data property');
+    }
+
+    /**
+     * Extract the included property from the mixed return of json_decode in a
+     * safe way for phpstan analysis.
+     * @param mixed $content
+     * @return array<string, JsonType>
+     * @throws Exception
+     */
+    public function getIncluded($content)
+    {
+        if (is_array($content) && array_key_exists('included', $content)) {
+            $included = $content['included'];
+            if (is_array($included)) {
+                return $included;
+            }
+        }
+
+        throw new \Exception('ApiModuleBase->getIncluded: decoded JSON does not have a valid included property');
     }
 }
 
@@ -225,10 +264,11 @@ class Token extends ApiModuleBase
     }
 
     /**
-     * Exchange a temp token received from CloudForest for a JWT.
+     * Exchange a temp token received from CloudForest for a JWT. The JWT
+     * contains an access token and a refresh token.
      *
      * @param  mixed $tempToken
-     * @return array An array containing the key 'access' with the access token
+     * @return array <string, string> An array containing the key 'access' with the access token
      */
     public function exchange($tempToken)
     {
@@ -251,7 +291,14 @@ class Token extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        return $content['data'];
+        $data = $this->getData($content);
+        if (array_key_exists('access', $data) && array_key_exists('refresh', $data) && is_string($data['access']) && is_string($data['refresh'])) {
+            return [
+                'access' => $data['access'],
+                'refresh' => $data['refresh'],
+            ];
+        }
+        throw new \Exception('Token->exchange: invalid JWT token returned from CloudForest');
     }
 }
 
@@ -278,7 +325,7 @@ class Listing extends ApiModuleBase
      *
      * @param  ListingDto $listing The new listing
      * @return mixed The new listing as an associative array
-     * @throws RequestException
+     * @throws GuzzleException
      */
     public function create(ListingDto $listing)
     {
@@ -296,20 +343,39 @@ class Listing extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        $userId = $content['data']['id'];
-        $companyId = count($content['included']['employments']) > 0
-            ? $content['included']['employments'][0]['companyId']
-            : '';
+        $data = $this->getData($content);
+
+        if (is_string($data['id'])) {
+            $userId = $data['id'];
+        } else {
+            throw new \Exception('Listing->create: did not load a valid user id with which to create a listing');
+        }
+
+        $included = $this->getIncluded($content);
+        $employments = $included['employments'];
+        $companyId = '';
+        if (is_array($employments) && count($employments) > 0) {
+            $company = $employments[0];
+            if (is_array($company) && array_key_exists('companyId', $company)) {
+                $companyId = $company['companyId'];
+            }
+        }
 
         try {
             $listing->userId = $userId;
             $listing->companyId = $companyId;
+
+            // Convert to assoc array
+            $encoded = json_encode($listing);
+            if (!$encoded) throw new \Exception('Listing->create: Failed to encode ListingDto');
+            $assoc = json_decode($encoded, true);
+
+            // Post it
             $response = $this->client->request(
                 'POST',
                 '/api/listings/',
                 [
-                    // Convert to assoc array
-                    'json' => json_decode(json_encode($listing), true),
+                    'json' => $assoc,
                     'headers' => $this->getHeadersWithAccessBearer(),
                 ]
             );
@@ -319,7 +385,8 @@ class Listing extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        return $content['data'];
+        $data = $this->getData($content);
+        return $data;
     }
 }
 
@@ -392,7 +459,8 @@ class Jwt extends ApiModuleBase
 
         $body = $response->getBody();
         $content = json_decode($body, true);
-        return $content['data'];
+        $data = $this->getData($content);
+        return $data;
     }
 }
 
@@ -428,7 +496,7 @@ class ListingDto
      *
      * @var value-of<ListingState>
      */
-    public $state = ListingState::OPEN;
+    public $state = 'OPEN';
 
     /**
      * The title of the listing.

@@ -1,0 +1,6 @@
+parameters:
+    level: 9
+    paths:
+        - src
+    typeAliases:
+        JsonType: 'string|int|bool|float|null|array<string, mixed>|array<mixed>'

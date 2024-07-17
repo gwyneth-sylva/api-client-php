@@ -19,6 +19,6 @@
     "scripts": {
         "phpcs:check": "./vendor/bin/php-cs-fixer check ./src",
         "phpcs:fix": "./vendor/bin/php-cs-fixer fix src",
-        "phpstan": "./vendor/bin/phpstan analyse -l 9 src"
+        "phpstan": "./vendor/bin/phpstan analyse"
     }
 }
