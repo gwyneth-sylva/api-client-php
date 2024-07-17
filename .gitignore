@@ -3,3 +3,4 @@ docs/
 .phpdoc/
 .php-cs-fixer.cache
 .phpunit.result.cache
+phpunit.xml

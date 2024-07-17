@@ -1,0 +1,13 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="cloudforest/api-client-php">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="CLOUDFOREST_HOST" value="cloudforest-host-here" />
+        <env name="CLOUDFOREST_API" value="cloudforest-api-here" />
+        <env name="CLOUDFOREST_CLIENT_ID" value="cloudforest-client-id-here" />
+        <env name="CLOUDFOREST_SECRET_ID" value="cloudforest-secret-id-here" />
+    </php>
+</phpunit>
