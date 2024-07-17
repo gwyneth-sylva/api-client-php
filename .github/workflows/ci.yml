@@ -7,6 +7,7 @@ on:
     branches: [ main ]
 
 env:
+  CLOUDFOREST_HOST: https://cfdev.cloudforest.market
   CLOUDFOREST_API: https://cfdev.cloudforest.market
 
 jobs:

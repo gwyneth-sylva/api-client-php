@@ -9,7 +9,7 @@ final class ApiClientTest extends TestCase
 {
     public function testMarketplaceUrl(): void
     {
-        $client = new ApiClient('', '', '', '');
+        $client = new ApiClient('', '', getenv('CLOUDFOREST_HOST'), '');
 
         $url = $client->getMarketplaceURL();
 

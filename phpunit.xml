@@ -1,0 +1,10 @@
+<phpunit>
+    <testsuites>
+        <testsuite name="cloudforest/api-client-php">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="CLOUDFOREST_HOST" value="blah" force="true" />
+    </php>
+</phpunit>
