@@ -28,3 +28,13 @@ phpdoc -d vendor/cloudforest/api-client-php/src -t ./docs
 ```
 
 You can then open `./docs/index.html` in a browser.
+
+## Code Quality
+
+You can run php-cs-fixer and phpstan:
+
+```
+composer run phpcs:check
+composer run phpcs:fix
+composer run phpstan
+```
