@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "junstyle.php-cs-fixer",
+        "editorconfig.editorconfig",
+        "bmewburn.vscode-intelephense-client"
+    ]
+}
