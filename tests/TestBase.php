@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use CloudForest\ApiClient;
+use CloudForest\ApiClientPhp\ApiClient;
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
