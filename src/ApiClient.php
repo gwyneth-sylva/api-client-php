@@ -7,6 +7,7 @@ namespace CloudForest;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use ReflectionClass;
 
 /**
  * ApiClient creates a client for using the CloudForest API. It defines some
@@ -643,8 +644,16 @@ class ListingDto
      */
     public $companyId = '';
 
+    /**
+     * The compartment info in json format
+     * @var StandardCompartment
+     */
+    public $compartmentInfo;
+
     public function __construct()
     {
         $this->title = 'Test Listing ' . date("Y-m-d H:i:s");
     }
 }
+
+
