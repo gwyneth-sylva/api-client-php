@@ -8,6 +8,8 @@
         <env name="CLOUDFOREST_HOST" value="cloudforest-host-here" />
         <env name="CLOUDFOREST_API" value="cloudforest-api-here" />
         <env name="CLOUDFOREST_CLIENT_ID" value="cloudforest-client-id-here" />
-        <env name="CLOUDFOREST_SECRET_ID" value="cloudforest-secret-id-here" />
+        <env name="CLOUDFOREST_CLIENT_SECRET" value="cloudforest-secret-id-here" />
+        <env name="CLOUDFOREST_EMAIL" value="cloudforest-account-email-here" />
+        <env name="CLOUDFOREST_PASS" value="cloudforest-account-pass-here" />
     </php>
 </phpunit>

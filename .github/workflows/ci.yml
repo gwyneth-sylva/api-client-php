@@ -9,6 +9,10 @@ on:
 env:
   CLOUDFOREST_HOST: https://cfdev.cloudforest.market
   CLOUDFOREST_API: https://cfdev.cloudforest.market
+  CLOUDFOREST_CLIENT_ID: ${{ secrets.CLOUDFOREST_CLIENT_ID }}
+  CLOUDFOREST_CLIENT_SECRET: ${{ secrets.CLOUDFOREST_CLIENT_SECRET }}
+  CLOUDFOREST_EMAIL: ${{ secrets.CLOUDFOREST_EMAIL }}
+  CLOUDFOREST_PASS: ${{ secrets.CLOUDFOREST_PASS }}
 
 jobs:
   ci:

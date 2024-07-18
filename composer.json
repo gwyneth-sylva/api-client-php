@@ -17,6 +17,11 @@
             "CloudForest\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "scripts": {
         "phpcs:check": "./vendor/bin/php-cs-fixer check",
         "phpcs:fix": "./vendor/bin/php-cs-fixer fix",
