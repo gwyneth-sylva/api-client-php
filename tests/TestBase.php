@@ -49,11 +49,14 @@ class TestBase extends TestCase
      * @throws GuzzleException
      * @throws RuntimeException
      */
-    protected function login() {
+    protected function login()
+    {
         $client = $this->getHttpClient();
         $email = getenv('CLOUDFOREST_EMAIL');
         $pass = getenv('CLOUDFOREST_PASS');
-        if (!$email || !$pass) return false;
+        if (!$email || !$pass) {
+            return false;
+        }
         $response = $client->request(
             'POST',
             '/api/jwts/login',
