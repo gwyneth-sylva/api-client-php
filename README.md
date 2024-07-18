@@ -38,3 +38,16 @@ composer run phpcs:check
 composer run phpcs:fix
 composer run phpstan
 ```
+
+## Testing
+
+This will run a suite of tests against a CloudForest Marketplace server such as
+cfdev.cloudforest.marketplace.
+
+Copy phpunit.dist.xml to phpunit.xml and fill in the environment variables. Then
+run:
+
+```
+composer run phpunit
+```
+
