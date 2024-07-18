@@ -103,7 +103,7 @@ class ApiModuleBase
      * an array.
      * @param mixed $content
      * @return array<string, JsonType>
-     * @throws Exception
+     * @throws \Exception
      */
     public function getDataAsArray($content)
     {
@@ -123,7 +123,7 @@ class ApiModuleBase
      * a string.
      * @param mixed $content string
      * @return string
-     * @throws Exception
+     * @throws \Exception
      */
     public function getDataAsString($content)
     {
@@ -142,7 +142,7 @@ class ApiModuleBase
      * safe way for phpstan analysis.
      * @param mixed $content
      * @return array<string, JsonType>
-     * @throws Exception
+     * @throws \Exception
      */
     public function getIncluded($content)
     {

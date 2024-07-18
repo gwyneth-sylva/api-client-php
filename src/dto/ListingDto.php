@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Dto;
 
+use StandardCompartment;
+
 enum ListingState: string
 {
     case DRAFT = 'DRAFT';

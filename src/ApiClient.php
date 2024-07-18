@@ -41,17 +41,17 @@ class ApiClient
     protected $api = '';
 
     /**
-     * @var Token
+     * @var TokenModule
      */
     public $token;
 
     /**
-     * @var Listing
+     * @var ListingModule
      */
     public $listing;
 
     /**
-     * @var Jwt
+     * @var JwtModule
      */
     public $jwt;
 
