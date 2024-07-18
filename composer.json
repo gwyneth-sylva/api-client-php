@@ -26,6 +26,7 @@
         "phpcs:check": "./vendor/bin/php-cs-fixer check",
         "phpcs:fix": "./vendor/bin/php-cs-fixer fix",
         "phpstan": "./vendor/bin/phpstan analyse",
-        "phpunit": "./vendor/bin/phpunit"
+        "phpunit": "./vendor/bin/phpunit",
+        "schema": "CloudForest\\ApiClientPhp\\Scripts\\JsonSchema::run"
     }
 }

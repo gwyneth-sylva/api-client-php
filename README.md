@@ -51,3 +51,10 @@ run:
 composer run phpunit
 ```
 
+## JSON Schema
+
+You can generate a JSON Schema from the PHP spec classes with:
+
+```
+composer run schema
+```
