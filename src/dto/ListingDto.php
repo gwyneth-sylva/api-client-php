@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Dto;
 
-use StandardCompartment;
+use CloudForest\ApiClientPhp\Schema\StandardCompartment;
 
 enum ListingState: string
 {
