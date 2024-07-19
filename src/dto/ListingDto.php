@@ -6,7 +6,6 @@ namespace CloudForest\ApiClientPhp\Dto;
 
 use CloudForest\ApiClientPhp\Schema\StandardCompartment;
 
-
 enum ListingState: string
 {
     case DRAFT = 'DRAFT';

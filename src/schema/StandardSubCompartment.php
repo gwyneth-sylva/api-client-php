@@ -51,7 +51,8 @@ class StandardSubCompartment
      * TODO
      * @return void
      */
-    public function createSpeciesDetailsFromPlots() : void {
+    public function createSpeciesDetailsFromPlots(): void
+    {
         return;
     }
 }

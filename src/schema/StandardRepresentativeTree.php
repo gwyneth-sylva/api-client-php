@@ -51,7 +51,7 @@ class StandardRepresentativeTree
      * Calculate the volume per hectare
      * @return float
      */
-    public function calcVolumePerHa() : float
+    public function calcVolumePerHa(): float
     {
         return $this->treeDetails->volume * $this->treesPerHa;
     }
