@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardInventory {
+class StandardInventory
+{
     /**
      * notes
      * @var string
@@ -28,11 +30,11 @@ Class StandardInventory {
      * species details array
      * @var StandardRepresentativeTree[]
      */
-    public $speciesDetails = array();
+    public $speciesDetails = [];
 
     /**
      * @see    Create the Inventory.
-     * @param  string $id     The Inventory notes.
+     * @param  string $notes     The Inventory notes.
      * @return void
      */
     public function __construct(string $notes)

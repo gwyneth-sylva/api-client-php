@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardTreeDistributionStats {
+class StandardTreeDistributionStats
+{
     /**
      * height range
      * @var float

@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-class StandardCompartment {
-
+class StandardCompartment
+{
     /**
      * ID (guuid)
      * @var string
@@ -25,11 +26,13 @@ class StandardCompartment {
 
     /**
      * TODO
+     * @var string
      */
     public $boundary;
 
     /**
      * TODO
+     * @var string
      */
     public $centroidcentroid;
 

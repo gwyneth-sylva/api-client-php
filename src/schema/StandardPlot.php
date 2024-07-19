@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardPlot {
+class StandardPlot
+{
     /**
      * id
      * @var string
@@ -22,6 +24,7 @@ Class StandardPlot {
 
     /**
      * TODO
+     * @var string
      */
     public $centroid;
 
@@ -41,7 +44,7 @@ Class StandardPlot {
      * real trees in this plot
      * @var StandardTree[]
      */
-    public $standingTrees = array();
+    public $standingTrees = [];
 
     /**
      * @see    Create the Plot.

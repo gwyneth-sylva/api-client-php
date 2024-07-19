@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardSubCompartment {
-
+class StandardSubCompartment
+{
     /**
      * ID (guuid)
      * @var string
@@ -27,13 +28,13 @@ Class StandardSubCompartment {
      * inventory array (may be for multiple years or seasons, so use array)
      * @var  StandardInventory[]
      */
-    public $inventory = array();
+    public $inventory = [];
 
     /**
      * array of ground truth plots
      * @var  StandardPlot[]
      */
-    public $plots = array();
+    public $plots = [];
 
     /**
      * @see    Create the SubCompartment.
@@ -48,6 +49,9 @@ Class StandardSubCompartment {
     /**
      * creates an inventory from the plot data
      * TODO
+     * @return void
      */
-    function createSpeciesDetailsFromPlots () {}
+    public function createSpeciesDetailsFromPlots() : void {
+        return;
+    }
 }

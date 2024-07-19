@@ -1,9 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardRepresentativeTree {
+class StandardRepresentativeTree
+{
     /**
      * tree details
      * @var StandardTree
@@ -47,8 +49,10 @@ Class StandardRepresentativeTree {
 
     /**
      * Calculate the volume per hectare
+     * @return float
      */
-    function calcVolumePerHa () {
+    public function calcVolumePerHa() : float
+    {
         return $this->treeDetails->volume * $this->treesPerHa;
     }
 

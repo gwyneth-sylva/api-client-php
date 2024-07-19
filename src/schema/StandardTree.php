@@ -1,13 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace CloudForest\ApiClientPhp\Schema;
 
-Class StandardTree {
+class StandardTree
+{
     /**
      * species ID
      * todo create common list
-     * @var integer
+     * @var int
      */
     public $speciesId;
 
@@ -38,12 +40,11 @@ Class StandardTree {
 
     /**
      * @see    Create the Tree Species.
-     * @param  string $speciesId     The species ID.
+     * @param  int $speciesId     The species ID.
      * @return void
      */
-    public function __construct(string $speciesId)
+    public function __construct(int $speciesId)
     {
         $this->speciesId = $speciesId;
     }
 }
-
