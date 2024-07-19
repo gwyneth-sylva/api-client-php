@@ -26,6 +26,12 @@ jobs:
     - name: Install dependencies
       uses: php-actions/composer@v6
 
+    - name: Dump autoload
+      uses: php-actions/composer@v6
+      with:
+        command: dump-autoload
+        only_args: --no-interaction --classmap-authoritative
+
     - name: PHP CS Fixer Check
       run: composer run phpcs:check
 

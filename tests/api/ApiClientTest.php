@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Tests\Api;
+
 use Tests\TestBase;
 
 final class ApiClientTest extends TestBase
