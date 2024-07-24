@@ -114,7 +114,7 @@ class ListingDto
      * For Standing Timber this is likely to be the StandardCompartment
      * specification supplied as a list. For other categories alternative data
      * structures can be used.
-     * @var array<StandardCompartment>
+     * @var array<string>
      */
     public $inventory = [];
 

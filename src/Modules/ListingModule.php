@@ -6,6 +6,7 @@ namespace CloudForest\ApiClientPhp\Modules;
 
 use CloudForest\ApiClientPhp\Dto\ListingDto;
 use GuzzleHttp\Exception\GuzzleException;
+use Respect\Validation\Rules\StringVal;
 
 /**
  * The client for the CloudForest Listing API module.
